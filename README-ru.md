@@ -39,8 +39,8 @@ COPY . .
 # Сборка приложения
 RUN npm run build
 
-# Открытие портов
-EXPOSE 3000 8877
+# Открытие порта
+EXPOSE 3000
 
 # Запуск приложения
 CMD ["node", "dist/main"]
@@ -139,11 +139,6 @@ jobs:
 
     Замените `your_mongodb_connection_string` на реальный URL вашей MongoDB базы данных.
 
-    #### Обратите внимание на порты:
-
-         - Порт 3000 используется для API вашего приложения
-         - Порт 8877 используется для документации API (Swagger)
-
 2.  Проверьте, что контейнер запущен:
     ```bash
     docker ps
@@ -180,7 +175,7 @@ jobs:
 5. Запустите новый контейнер:
 
    ```bash
-   docker run -d -p 3000:3000 -p 8877:8877 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
+   docker run -d -p 3000:3000 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
    ```
 
 6. Проверьте, что новый контейнер запущен:
@@ -197,7 +192,7 @@ jobs:
    docker stop $(docker ps -q --filter ancestor=ghcr.io/your-username/your-repo:main)
    docker rm $(docker ps -aq --filter ancestor=ghcr.io/your-username/your-repo:main)
    docker pull ghcr.io/your-username/your-repo:main
-   docker run -d -p 3000:3000 -p 8877:8877 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
+   docker run -d -p 3000:3000 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
    ```
 
 2. Сделайте скрипт исполняемым:
@@ -244,7 +239,7 @@ jobs:
         }
 
         location /docs {
-            proxy_pass http://localhost:8877;
+            proxy_pass http://localhost:3000;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection 'upgrade';
@@ -294,7 +289,7 @@ jobs:
        }
 
        location /docs {
-           proxy_pass http://localhost:8877;
+           proxy_pass http://localhost:3000;
            proxy_http_version 1.1;
            proxy_set_header Upgrade $http_upgrade;
            proxy_set_header Connection 'upgrade';
