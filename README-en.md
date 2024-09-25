@@ -39,8 +39,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose ports
-EXPOSE 3000 8877
+# Expose port
+EXPOSE 3000
 
 # Run the application
 CMD ["node", "dist/main"]
@@ -134,15 +134,10 @@ jobs:
 
    ```bash
    docker pull ghcr.io/your-username/your-repo:main
-   docker run -d -p 3000:3000 -p 8877:8877 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
+   docker run -d -p 3000:3000 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
    ```
 
    Replace `your_mongodb_connection_string` with the actual URL of your MongoDB database.
-
-   #### Note the ports:
-
-   - Port 3000 is used for your application's API
-   - Port 8877 is used for API documentation (Swagger)
 
 2. Check that the container is running:
    ```bash
@@ -180,7 +175,7 @@ When you make changes to your repository and want to update the application on t
 5. Run the new container:
 
    ```bash
-   docker run -d -p 3000:3000 -p 8877:8877 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
+   docker run -d -p 3000:3000 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
    ```
 
 6. Check that the new container is running:
@@ -197,7 +192,7 @@ For automation, you can create an update script:
    docker stop $(docker ps -q --filter ancestor=ghcr.io/your-username/your-repo:main)
    docker rm $(docker ps -aq --filter ancestor=ghcr.io/your-username/your-repo:main)
    docker pull ghcr.io/your-username/your-repo:main
-   docker run -d -p 3000:3000 -p 8877:8877 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
+   docker run -d -p 3000:3000 -e DATABASE_URL="your_mongodb_connection_string" ghcr.io/your-username/your-repo:main
    ```
 
 2. Make the script executable:
@@ -244,7 +239,7 @@ If you want to use a domain name and HTTPS, you need to set up Nginx as a revers
         }
 
         location /docs {
-            proxy_pass http://localhost:8877;
+            proxy_pass http://localhost:3000;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection 'upgrade';
@@ -294,7 +289,7 @@ For security, it is recommended to set up HTTPS. Certbot allows you to easily ob
        }
 
        location /docs {
-           proxy_pass http://localhost:8877;
+           proxy_pass http://localhost:3000;
            proxy_http_version 1.1;
            proxy_set_header Upgrade $http_upgrade;
            proxy_set_header Connection 'upgrade';
