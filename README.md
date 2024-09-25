@@ -3,10 +3,10 @@
 This repository contains a comprehensive guide for deploying a Node.js application with MongoDB using Docker on a Timeweb VPS. The guide is available in two languages:
 
 ## 🇺🇸 English Version
-[Click here for the English guide](./README_EN.md)
+[Click here for the English guide](./README-en.md)
 
 ## 🇷🇺 Russian Version
-[Нажмите здесь для руководства на русском языке](./README_RU.md)
+[Нажмите здесь для руководства на русском языке](./README-ru.md)
 
 ## Overview
 
