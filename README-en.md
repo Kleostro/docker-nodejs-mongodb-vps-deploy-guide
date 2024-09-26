@@ -333,6 +333,6 @@ Certbot will automatically set up certificate renewal. You can check and update 
 
 ## Conclusion
 
-Now your Node.js application with MongoDB should be deployed in a Docker container on Timeweb VPS, accessible through the configured ports 3000 and 8877, and easily updatable when changes are made to the repository.
+Now your Node.js application with MongoDB should be deployed in a Docker container on Timeweb VPS, accessible through the configured port 3000, and easily updatable when changes are made to the repository.
 
-Don't forget to regularly check and update your application, and set up monitoring to ensure stable operation.
+Don't forget to regularly check and update your application.
